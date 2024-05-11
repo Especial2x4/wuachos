@@ -15,6 +15,26 @@ class UsuarioModelo {
     
     }
 
+    public function existeNombreUsuario($nombre){
+
+        $sql = "SELECT COUNT(*) AS total FROM usuarios WHERE nombre = :nombre";
+        $stmt = $this->conexion->prepare($sql); // prepara la consulta
+        $stmt->bindParam(':nombre', $nombre); // vincula la variable nombre dentro de la consulta
+        $stmt->execute(); // ejecuta la consulta
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC); // se almacena el resultado de la consulta en un array asociativo
+        return $resultado['total'] > 0;
+    }
+
+    public function existeCorreoElectronico($email) {
+        
+        $sql = "SELECT COUNT(*) AS total FROM usuarios WHERE email = :email";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado['total'] > 0;
+    }
+
     public function registrarUsuario($nombre, $email, $password) {
         
         $sql = "INSERT INTO usuarios (nombre, email, password) VALUES (:nombre, :email, :password)";
