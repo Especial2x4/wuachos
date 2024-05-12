@@ -1,9 +1,9 @@
 
 <?php
+
 // index.php
 
-require_once 'controladores/UsuarioController.php';
+require_once 'vistas/home.php';
 
-$usuarioController = new UsuarioController();
-$usuarioController->registrar();
+
 ?>

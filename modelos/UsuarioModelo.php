@@ -2,7 +2,7 @@
 <?php
 // modelos/UsuarioModelo.php
 
-require_once 'configuracion/database.php';
+require_once '../configuracion/database.php';
 
 class UsuarioModelo {
     
