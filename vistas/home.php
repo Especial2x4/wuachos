@@ -15,7 +15,7 @@
 
 
     <h1>Please Login or Signup</h1>
-    <a href="login.php">Login</a>
+    <a href="vistas/login.php">Login</a>
     <br>
     <br>
     <a href="vistas/registro.php">Signup</a>

@@ -15,6 +15,8 @@ class UsuarioModelo {
     
     }
 
+    // Funciones de registro
+
     public function existeNombreUsuario($nombre){
 
         $sql = "SELECT COUNT(*) AS total FROM usuarios WHERE nombre = :nombre";
@@ -44,5 +46,32 @@ class UsuarioModelo {
         $stmt->bindParam(':password', $password);
         return $stmt->execute();
     }
+
+    // Funciones de login
+
+    public function verificarCredenciales($nombre, $password) {
+        $sql = "SELECT * FROM usuarios WHERE nombre = :nombre";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->execute();
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($usuario && password_verify($password, $usuario['password'])) {
+            return $usuario;
+        } else {
+            return false;
+        }
+    
+    }
+
+
+
+
+
+
+
+
 }
+
+
 ?>

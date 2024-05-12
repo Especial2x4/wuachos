@@ -4,6 +4,7 @@
 require_once '../modelos/UsuarioModelo.php';
 
 class UsuarioController {
+    
     public function __construct() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             die('Acceso no permitido');
@@ -19,11 +20,17 @@ class UsuarioController {
             case 'registrar':
                 $this->registrar();
                 break;
-            // Agrega más casos según sea necesario para otras acciones
+            
+            case 'iniciarSesion':
+                $this->iniciarSesion();
+                break;
+                // Agrega más casos según sea necesario para otras acciones
             default:
                 die('Acción no válida');
         }
     }
+
+    // Funciones de registro
 
     public function registrar() {
         // Tu lógica para registrar un usuario aquí
@@ -60,6 +67,50 @@ class UsuarioController {
 
         }
     }
+
+
+    // Funciones de login
+
+    public function iniciarSesion() {
+
+        if ($_POST['accion'] === 'iniciarSesion') {
+            $nombre = $_POST['nombre'];
+            $password = $_POST['password'];
+            
+            //$usuarioController->iniciarSesion($nombre, $password);
+
+            $usuarioModelo = new UsuarioModelo();
+            $usuario = $usuarioModelo->verificarCredenciales($nombre, $password);
+
+            if ($usuario) {
+                // Iniciar sesión y redirigir al usuario a su página de inicio
+                $_SESSION['usuario'] = $usuario;
+                header('Location: ../vistas/mensaje.php??mensaje=Inicio de sesion exitoso');
+                exit();
+            } else {
+                // Credenciales incorrectas, redirigir al usuario al formulario de inicio de sesión con un mensaje de error
+                header('Location: ../vistas/mensaje.php??error=1');
+                exit();
+            }
+
+            
+
+        }
+
+       
+    }
+
+
+    public function cerrarSesion() {
+        session_start();
+        session_unset();
+        session_destroy();
+        header('Location: login.php');
+        exit();
+    }
+
+
+
 }
 
 // Instancia del controlador para que se ejecute automáticamente al incluir este archivo
