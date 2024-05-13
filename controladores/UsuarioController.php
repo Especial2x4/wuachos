@@ -84,12 +84,14 @@ class UsuarioController {
 
             if ($usuario) {
                 // Iniciar sesión y redirigir al usuario a su página de inicio
+                session_start();
                 $_SESSION['usuario'] = $usuario;
-                header('Location: ../vistas/mensaje.php??mensaje=Inicio de sesion exitoso');
+                header('Location: ../vistas/dashboard.php');
+                
                 exit();
             } else {
                 // Credenciales incorrectas, redirigir al usuario al formulario de inicio de sesión con un mensaje de error
-                header('Location: ../vistas/mensaje.php??error=1');
+                header('Location: ../vistas/login.php?error=1');
                 exit();
             }
 
@@ -105,7 +107,8 @@ class UsuarioController {
         session_start();
         session_unset();
         session_destroy();
-        header('Location: login.php');
+        header('Location: ..vistas/login.php');
+        echo "se destruyó la session";
         exit();
     }
 
